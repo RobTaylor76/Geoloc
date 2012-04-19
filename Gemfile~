@@ -5,7 +5,6 @@ gem 'jquery-rails', '>= 1.0.12'
 
 gem 'therubyracer', :require => 'v8'
 gem 'execjs'
-gem 'devise' , '~> 1.4.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

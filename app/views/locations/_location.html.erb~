@@ -1,0 +1,6 @@
+<div>
+<%= simple_format(location.name) %>
+<%= number_with_precision(location.latitude, :precision => 5) %>
+<%= number_with_precision(location.longitude,  :precision => 5) %>
+hi
+</div>

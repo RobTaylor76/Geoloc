@@ -1,0 +1,53 @@
+<div id="map"></div>
+
+<script>
+var map;
+
+$(document).ready(function () {
+var loc = new google.maps.LatLng(55, -1.5);
+var myOptions = {
+zoom: 5,
+center: loc,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+}
+map = new google.maps.Map(document.getElementById("map"), myOptions);
+// test for presence of geolocation
+if (navigator && navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+} else {
+alert('Geolocation not supported.');
+}
+});
+
+function geo_success(position) {
+getLoc(position.coords.latitude, position.coords.longitude);
+}
+
+function geo_error(err) {
+if (err.code == 1) {
+alert('Location information denied by user.');
+} else if (err.code == 2) {
+alert('Location information is unavailable.');
+} else if (err.code == 3) {
+alert('Location information timed out.');
+} else {
+alert('An unknown error occurred.');
+}
+}
+
+// output lat and long
+function getLoc(lat, long) {
+var loc = new google.maps.LatLng(lat, long);
+//$('#directions').append('<p>Lat: ' + lat + '</p>');
+//$('#directions').append('<p>Long: ' + long + '</p>');
+var myOptions = {
+zoom: 10,
+center: loc,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+}
+map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+
+}
+
+</script>
