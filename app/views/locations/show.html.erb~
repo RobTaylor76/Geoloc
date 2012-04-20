@@ -1,0 +1,4 @@
+<%= link_to "List Users Locations", user_locations_path(user) %>
+<h2>Show Location</h2>
+
+<%= render "map" %>

@@ -1,1 +1,6 @@
-<% render @locations %>
+<div>
+hi
+</div>
+<div>
+<%= render @locations %>
+</div>
