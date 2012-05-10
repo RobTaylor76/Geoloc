@@ -2,20 +2,33 @@
 
 <script>
 var map;
+var marker = null;
+var infowindow = new google.maps.InfoWindow(
+{
+size: new google.maps.Size(150,50)
+}); 
 
 $(document).ready(function () {
-var loc = new google.maps.LatLng(55, -1.5);
+
+var lat = $('#location_latitude').val();
+var long = $('#location_longitude').val();
+
+if (!!lat && !!long)  {
+var loc = new google.maps.LatLng(lat, long);
 var myOptions = {
-zoom: 9,
+zoom: 15,
 center: loc,
 mapTypeId: google.maps.MapTypeId.ROADMAP
 }
-map = new google.maps.Map(document.getElementById("map"), myOptions);
+createMap( myOptions, infowindow);
+
+} else {
 // test for presence of geolocation
 if (navigator && navigator.geolocation) {
-navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+navigator.geolocation.getCurrentPosition(geo_success, geo_error );
 } else {
 alert('Geolocation not supported.');
+}
 }
 });
 
@@ -45,9 +58,50 @@ zoom: 15,
 center: loc,
 mapTypeId: google.maps.MapTypeId.ROADMAP
 }
-map = new google.maps.Map(document.getElementById("map"), myOptions);
-
+createMap( myOptions);
 
 }
+
+function createMap( myOptions)
+{
+
+map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+google.maps.event.addListener(map, 'click', function() {
+	infowindow.close();
+});
+google.maps.event.addListener(map, 'click', function(event) {
+	//call function to create marker
+	if (marker) {
+	marker.setMap(null);
+	marker = null;
+	}
+	marker = createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng ,map);
+
+	$('#location_latitude').val(myOptions.center.lat()).change();
+        $('#location_longitude').val(myOptions.center.lng()).change();
+
+}); 
+
+createMarker(myOptions.center, "name", "<b>Location</b><br>"+myOptions.center, map)
+
+}
+
+
+// A function to create the marker and set up the event window function
+function createMarker(latlng, name, html, map) {
+	var contentString = html;
+	var marker = new google.maps.Marker({
+	position: latlng,
+	map: map,
+	zIndex: Math.round(latlng.lat()*-100000)<<5
+	});
+	google.maps.event.addListener(marker, 'click', function() {
+	infowindow.setContent(contentString);
+	infowindow.open(map,marker);
+	});
+	google.maps.event.trigger(marker, 'click');
+	return marker;
+} 
 
 </script>

@@ -1,6 +1,4 @@
-<div>
-hi
-</div>
-<div>
+
+<div id="locations">
 <%= render @locations %>
 </div>

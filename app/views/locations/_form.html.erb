@@ -1,0 +1,16 @@
+<%= form_for [@user, @location] do |f| %>
+
+<p>
+ <%= f.label "Name" %>
+ <%= f.text_field :name %>
+</p>
+<p>
+ <%= f.label :latitude %>
+ <%= f.text_field :latitude, data: {orig: @location.latitude} %>
+</p>
+<p>
+ <%= f.label :longitude %>
+ <%= f.text_field :longitude, data: {orig: @location.longitude} %>
+</p>
+<%= f.submit %>
+<% end %>
