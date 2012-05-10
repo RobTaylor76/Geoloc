@@ -1,5 +1,11 @@
 var map;
 var tmp_marker = null;
+var defaults = {
+	zoom : 16,
+	latitude : 55,
+	longitude:  -1.5};
+
+
 var infowindow = new google.maps.InfoWindow(
     {
       size: new google.maps.Size(150,50)
@@ -11,13 +17,7 @@ $(document).ready(function () {
   var long = $('#location_longitude').val();
 
   if (!!lat && !!long)  {
-    var loc = new google.maps.LatLng(lat, long);
-    var myOptions = {
-      zoom: 15,
-  center: loc,
-  mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    createMap( myOptions, infowindow);
+     createMap(lat , long);
 
   } else {
 
@@ -30,7 +30,9 @@ $(document).ready(function () {
 });
 
 function geo_success(position) {
-  getLoc(position.coords.latitude, position.coords.longitude);
+
+  createMap( position.coords.latitude,position.coords.longitude);
+
 }
 
 function geo_error(err) {
@@ -45,20 +47,26 @@ function geo_error(err) {
   }
 }
 
-
-function getLoc(lat, long) {
-  var loc = new google.maps.LatLng(lat, long);
-  var myOptions = {
-    zoom: 15,
-    center: loc,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  }
-  createMap( myOptions);
-
+function createMapOptions (lat,long,zoom) {
+    var loc = new google.maps.LatLng(lat, long);
+    var myOptions = {
+      zoom: zoom,
+      center: loc,
+      mapTypeId: google.maps.MapTypeId.ROADMAP};
+    
+  return myOptions;
 }
 
-function createMap( myOptions)
+/*
+create map takes  lat , long and zoom params… zoom is optional… defaults to defaults.zoom
+*/
+function createMap( lat , long , zoom )
 {
+
+   if ( zoom === undefined ) {
+      zoom = defaults.zoom ;
+   }
+  myOptions  = createMapOptions(lat, long, zoom );
 
   map = new google.maps.Map(document.getElementById("map"), myOptions);
 
@@ -72,7 +80,7 @@ function createMap( myOptions)
       tmp_marker = null;
     }
     tmp_marker = createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng ,map);
-
+// when a marker is created… the form fields are updated to reflect the new position
     $('#location_latitude').val(event.latLng.lat()).change();
     $('#location_longitude').val(event.latLng.lng()).change();
 
@@ -85,7 +93,9 @@ function createMap( myOptions)
 
 }
 
-
+/*
+When map is clicked a new marker is created.
+*/
 function createMarker(latlng, name, html, map) {
   var contentString = html;
   var marker = new google.maps.Marker({
