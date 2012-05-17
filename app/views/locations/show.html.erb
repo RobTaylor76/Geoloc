@@ -1,4 +1,5 @@
-<%= link_to "List Users Locations", user_locations_path(@user) %>
+<%= link_to "List All Locations", locations_path %>
+<%= link_to "List Users Locations", user_locations_path(current_user) %>
 <%= javascript_include_tag 'gmap' %>
 
 <h2>Show Location</h2>

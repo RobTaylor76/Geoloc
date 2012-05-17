@@ -1,5 +1,7 @@
 <div>
-<%= link_to  "New Location", new_user_location_path(@user) %>
+<%= link_to  "New Location", new_user_location_path(current_user) %>
+<%= link_to "List Users Locations", user_locations_path(current_user) %>
+<%= link_to "List All Locations", locations_path%>
 </div>
 <div id="locations">
 <%= render @locations %>

@@ -2,8 +2,8 @@ var map;
 var tmp_marker = null;
 var defaults = {
 	zoom : 16,
-	latitude : 55,
-	longitude:  -1.5};
+	latitude : 54.968455496864586,
+  longitude : -1.6067519187927246};
 
 
 var infowindow = new google.maps.InfoWindow(
@@ -45,6 +45,7 @@ function geo_error(err) {
   } else {
     alert('An unknown error occurred.');
   }
+  createMap(defaults.latitude , defaults.longitude);
 }
 
 function createMapOptions (lat,long,zoom) {

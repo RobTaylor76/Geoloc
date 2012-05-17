@@ -1,4 +1,4 @@
-<%= form_for [@user, @location] do |f| %>
+<%= form_for [current_user, @location] do |f| %>
 
 <p>
  <%= f.label "Name" %>
@@ -10,7 +10,8 @@
 </p>
 <p>
  <%= f.label :longitude %>
- <%= f.text_field :longitude, data: {orig: @location.longitude} %>
+ <%= f.text_field :longitude, data: {:orig => @location.longitude, :'min-value' => -1.5, :'max-value' => -1.6} %>
+
 </p>
 <%= f.submit %>
 <% end %>

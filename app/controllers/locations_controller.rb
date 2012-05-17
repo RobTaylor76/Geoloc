@@ -1,11 +1,12 @@
 class LocationsController < ApplicationController
 
-before_filter :find_user
 before_filter :find_location, :only => [:show, :edit, :update, :destroy]
 
 def index
  # @ls = Location.find_by_user_id(@user)
- @locations = @user.locations
+ @locations = Location.all unless  params[:user_id].presence
+ @locations = current_user.locations  if params[:user_id].presence
+ @locations
 end
 
 def show
@@ -13,7 +14,7 @@ def show
 end
 
 def new
- @location = @user.locations.build
+ @location = current_user.locations.build 
 end
 
 def edit
@@ -23,7 +24,7 @@ end
 def update
   if @location.update_attributes(params[:location])
   flash[:notice] = 'Location has been created'
-  redirect_to [@user, @location]
+  redirect_to [current_user, @location]
 else
   flash[:alert] = 'Ticket has not been updates'
   render :action => 'edit'
@@ -32,7 +33,7 @@ end
 end
 
 def create 
-@location = @user.locations.build(params[:location])
+@location = current_user.locations.build(params[:location])
 
 if @location.save 
   flash[:notice] = 'Location has been created'
@@ -46,14 +47,11 @@ end
 
 def destroy
   @location.destroy
-  redirect_to user_locations_path (@user)
+  redirect_to user_locations_path (current_user)
 end
 
 private 
 
-def find_user
- @user = User.find(params[:user_id])
-end
 
 def find_location
  @location = Location.find(params[:id])

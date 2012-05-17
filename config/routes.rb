@@ -1,6 +1,9 @@
 Geoloc::Application.routes.draw do
 
   devise_for :users
+
+  resources :locations
+
   resources :users do 
      resources :locations
   end 
