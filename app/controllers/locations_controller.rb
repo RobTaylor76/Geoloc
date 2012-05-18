@@ -5,7 +5,8 @@ before_filter :find_location, :only => [:show, :edit, :update, :destroy]
 def index
  # @ls = Location.find_by_user_id(@user)
  @locations = Location.all unless  params[:user_id].presence
- @locations = current_user.locations  if params[:user_id].presence
+# @locations = current_user.locations  if params[:user_id].presence
+ @locations = Location.find_all_by_user_id(params[:user_id]) if  params[:user_id].presence
  @locations
 end
 
