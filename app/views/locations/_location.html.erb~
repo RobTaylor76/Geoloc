@@ -1,9 +1,0 @@
-<div id="location">
-<%=link_to location.name ,  [@user,location]%>
-<%= link_to "Delete user" , [@user,location] , :method => :delete, :confirm => 'Are you sure you wish to delete this location' %>
-<%= simple_format(location.name) %>
-<%= number_with_precision(location.latitude, :precision => 5) %>
-<%= number_with_precision(location.longitude,  :precision => 5) %>
-<div>
-
-
