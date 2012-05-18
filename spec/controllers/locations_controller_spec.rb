@@ -37,4 +37,17 @@ describe LocationsController do
     locations.should_not include(@user2.locations)
 
   end
+
+  it :should_create_a_new_loaction_for_user1 do
+
+    location_params = { name: 'test new location', latitude:  -1.5, longitude: 55 }
+
+    post 'create' , {location: location_params}
+    new_location = assigns[:location]
+
+    response.should redirect_to (user_location_path(@user1, new_location))
+    @user1.reload
+    @user1.locations.should  include(new_location)
+
+  end
 end
