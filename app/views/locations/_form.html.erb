@@ -1,4 +1,4 @@
-<%= form_for [current_user, @location] do |f| %>
+<%= form_for [current_user, @location], :html => { :class => 'well form-horizontal'  } do |f| %>
 
 <p>
  <%= f.label "Name" %>

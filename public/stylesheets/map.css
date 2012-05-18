@@ -7,4 +7,16 @@
 	margin-bottom: 0;
 	margin-left: auto;
 	border: 1px solid #666;
+  float: right;
 }
+/* 
+ * Bootstrap and googlemaps have slight conflict... setting max with = non on images on map cleares this
+ */
+#map img {
+  max-width: none;
+}
+/*
+ * also an issue with the dropdown selectors for terrain and overlays
+ */
+#mapCanvas label { width: auto; display:inline; }
+#mapCanvas img { max-width: none; }
